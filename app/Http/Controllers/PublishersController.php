@@ -3,64 +3,70 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publishers;
-use App\Http\Requests\StorePublishersRequest;
-use App\Http\Requests\UpdatePublishersRequest;
+use Illuminate\Http\Request;
 
 class PublishersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+       $publishers = Publisher::with('books')->get();
+       return view('publishers.index', compact('publishers'));
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function show($id)
+    {
+        $publisher = Publisher::with('books')->findOrFail($id);
+        return view('publishers.show', compact('publisher'));
+
+    }
+
     public function create()
     {
-        //
+        return view('publishers.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePublishersRequest $request)
+    public function store(Request $request)
     {
-        //
+       $validatedData = $request->validate([
+           'name' => 'required|string|max:255',
+           'address' => 'nullable|string|max:255',
+       ]);
+
+       Publisher::create($validatedData);
+
+       return redirect()->route('publishers.index')->with('success', 'Editora criada com sucesso!');
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Publishers $publishers)
+    public function edit($id)
     {
-        //
+          $publisher = Publisher::findOrFail($id);
+          return view('publishers.edit', compact('publisher'));
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Publishers $publishers)
+    public function update(Request $request, $id)
     {
-        //
+       $validatedData = $request->validate([
+                  'name' => 'required|string|max:255',
+                  'address' => 'nullable|string|max:255',
+              ]);
+
+              $publisher = Publisher::findOrFail($id);
+              $publisher->update($validatedData);
+
+              return redirect()->route('publishers.index')->with('success', 'Editora atualizada com sucesso!');
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePublishersRequest $request, Publishers $publishers)
+    public function destroy($id)
     {
-        //
-    }
+       $publisher = Publisher::findOrFail($id);
+               $publisher->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Publishers $publishers)
-    {
-        //
+               return redirect()->route('publishers.index')->with('success', 'Editora excluída com sucesso!');
+
     }
 }

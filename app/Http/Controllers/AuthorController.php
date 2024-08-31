@@ -2,65 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreAuthorRequest;
-use App\Http\Requests\UpdateAuthorRequest;
 use App\Models\Author;
+use Illuminate\http\Request;
 
 class AuthorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $authors = Author::with('bookd')->get();
+        return view('authors.index', compact('authors'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function show($id)
+    {
+        $author = Author::with('books')->findOrFail($id);
+        return view('authors.show', compact('author'));
+    }
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAuthorRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'name' => 'required|string|max:255',
+            'birth_date' => 'nullable|date',
+        ]);
+         Author::create($validatedData);
+
+         return redirect()->route('authors.index')->with('success','Autor criado com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Author $author)
+    public function edit($id)
     {
-        //
+        $author = Author::findOrFail($id);
+        return view('authors.edit', compact('author'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Author $author)
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+                    'name' => 'required|string|max:255',
+                    'birth_date' => 'nullable|date',
+                ]);
+
+                $author = Author::findOrFail($id);
+                $author->update($validatedData);
+
+                return redirect()->route('authors.index')->with('success', 'Autor atualizado com sucesso!');
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateAuthorRequest $request, Author $author)
+    public function destroy($id)
     {
-        //
-    }
+        $author = Author::findOrFail($id);
+                $author->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Author $author)
-    {
-        //
+                return redirect()->route('authors.index')->with('success', 'Autor excluído com sucesso!');
+
     }
 }
