@@ -11,13 +11,11 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->unsignedBigInteger('author_id');
-            $table->unsignedBigInteger('publisher_id')->nullable();
+            $table->foreignId('author_id')->references('id')->on('authors')->onDelete('cascade');
+            $table->foreignId('publisher_id')->nullable()->references('id')->on('publishers')->onDelete('set null');
             $table->integer('published_year');
             $table->timestamps();
 
-            $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
-            $table->foreign('publisher_id')->references('id')->on('publishers')->onDelete('set null');
         });
     }
 

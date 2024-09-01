@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
-use Illuminate\http\Request;
+use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
@@ -28,7 +28,7 @@ class AuthorController extends Controller
             'name' => 'required|string|max:255',
             'birth_date' => 'nullable|date',
         ]);
-         Author::create($validatedData);
+         Author::create($validateData);
 
          return redirect()->route('authors.index')->with('success','Autor criado com sucesso!');
     }

@@ -20,6 +20,7 @@
                         <td>{{ $book->title }}</td>
                         <td>{{ $book->author->name }}</td>
                         <td>{{ $book->publisher->name }}</td>
+
                         <td>
                             @foreach ($book->categories as $category)
                                 <span class="badge bg-secondary">{{ $category->name }}</span>
