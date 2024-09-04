@@ -3,7 +3,9 @@
 @section('content')
     <div class="container">
         <h1>Lista de Livros</h1>
+        @if(auth()->user()->role != 'cliente')
         <a href="{{ route('books.create') }}" class="btn btn-primary mb-3">Adicionar Novo Livro</a>
+        @endif
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -28,12 +30,14 @@
                         </td>
                         <td>
                             <a href="{{ route('books.show', $book->id) }}" class="btn btn-info">Ver</a>
+                            @if(auth()->user()->role != 'cliente')
                             <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este livro?')">Excluir</button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
