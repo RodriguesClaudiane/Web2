@@ -11,17 +11,21 @@ class UsersController extends Controller
         $librarians = User::where('role','librarian')->get();
         return view('manage.index', compact('librarians'));
     }
-    public function update(Request $request)
+    public function updateUserRole(Request $request)
     {
+        // Validação do email
         $request->validate([
-        'email' => 'required|email|exists:users,email'
+            'email' => 'required|email|exists:users,email',
         ]);
-        $user = User::where('email', $request->input('email'))->first();
-        if ($user) {
-            $user->role = 'librarian';
-            $user->save();
-            return redirect()->route('manage.index')->with('success', 'Categoria criada com sucesso!');
-        }
-            return redirect()->route('manage.index')->with('error', 'Usuário não encontrado!');
+
+        // Busca o usuário pelo email
+        $user = User::where('email', $request->email)->firstOrFail();
+
+        // Altera a role para 'librarian'
+        $user->role = 'librarian';
+        $user->save();
+
+        // Redireciona de volta com uma mensagem de sucesso
+        return redirect()->back()->with('success', 'O usuário foi atualizado para bibliotecário.');
     }
 }

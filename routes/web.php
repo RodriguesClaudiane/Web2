@@ -43,6 +43,5 @@ Route::resource('categories', CategoryController::class);
 // Rotas para Publishers
 Route::resource('publishers', PublishersController::class);
 //Rotas para Users
-Route::resource('manage', UsersController::class);
-Route::put('/manage/edit', [UsersController::class, 'update'])->name('manage.update');
-
+Route::resource('manage', UsersController::class)->only(['index','destroy']);
+Route::put('/manage/edit', [UsersController::class, 'updateUserRole'])->name('manage.updateUserRole');

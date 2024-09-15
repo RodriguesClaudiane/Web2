@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Bibliotecários</h1>
-    <a href="{{ route('manage.edit') }}" class="btn btn-primary mb-3">Adicionar Nova Categoria</a>
+    <a href="{{ route('manage.updateUserRole') }}" class="btn btn-primary mb-3">Adicionar Nova Categoria</a>
     <thead>
     <tr>Nome</tr>
     <tr>Email</tr>
