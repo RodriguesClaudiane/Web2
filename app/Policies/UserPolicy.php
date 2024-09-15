@@ -7,7 +7,7 @@ use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
-    
+
     public function admin(User $user): bool
     {
         return $user->role === "administrador";
@@ -15,7 +15,7 @@ class UserPolicy
 
     public function client(User $user): bool
     {
-        return $user->role === "client" || $user->role === "bibliotecario" || $user->role === "administrador";
+        return $user->role === "cliente" || $user->role === "bibliotecario" || $user->role === "administrador" || $user->role === null;
     }
 
     public function librarian(User $user): bool

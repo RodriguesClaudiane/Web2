@@ -16,7 +16,7 @@
             @endforeach
         </p>
         <a href="{{ route('books.index') }}" class="btn btn-primary">Voltar à Lista</a>
-        @if(auth()->user()->role != 'cliente')
+        @if(auth()->check() && auth()->user()->role != 'cliente')
         <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning">Editar</a>
         <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display:inline-block;">
             @csrf

@@ -3,7 +3,9 @@
 @section('content')
     <div class="container">
         <h1>Lista de Categorias</h1>
+        @if(auth()->check() && auth()->user()->role != 'cliente')
         <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Adicionar Nova Categoria</a>
+        @endif
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -17,12 +19,14 @@
                         <td>{{ $category->name }}</td>
                         <td>
                             <a href="{{ route('categories.show', $category->id) }}" class="btn btn-info">Ver</a>
+                            @if(auth()->check() && auth()->user()->role != 'cliente')
                             <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta categoria?')">Excluir</button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

@@ -21,6 +21,7 @@ class AuthorController extends Controller
     }
     public function create()
     {
+        Gate::authorize('librarian', User::class);
         return view('authors.create');
     }
 
@@ -60,6 +61,7 @@ class AuthorController extends Controller
 
     public function destroy($id)
     {
+        Gate::authorize('librarian', User::class);
         $author = Author::findOrFail($id);
                 $author->delete();
 

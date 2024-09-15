@@ -3,7 +3,9 @@
 @section('content')
     <div class="container">
         <h1>Lista de Editoras</h1>
+        @if(auth()->check() && auth()->user()->role != 'cliente')
         <a href="{{ route('publishers.create') }}" class="btn btn-primary mb-3">Adicionar Nova Editora</a>
+        @endif
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -19,12 +21,14 @@
                         <td>{{ $publisher->address }}</td>
                         <td>
                             <a href="{{ route('publishers.show', $publisher->id) }}" class="btn btn-info">Ver</a>
+                            @if(auth()->check() && auth()->user()->role != 'cliente')
                             <a href="{{ route('publishers.edit', $publisher->id) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('publishers.destroy', $publisher->id) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta editora?')">Excluir</button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

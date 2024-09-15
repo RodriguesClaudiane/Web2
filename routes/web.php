@@ -5,6 +5,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PublishersController;
+use App\Http\Controllers\UsersController;
 
 
 /*
@@ -41,5 +42,7 @@ Route::resource('categories', CategoryController::class);
 
 // Rotas para Publishers
 Route::resource('publishers', PublishersController::class);
-
+//Rotas para Users
+Route::resource('manage', UsersController::class);
+Route::put('/manage/edit', [UsersController::class, 'update'])->name('manage.update');
 

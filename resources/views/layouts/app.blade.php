@@ -37,7 +37,9 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="booksDropdown">
                                 <a class="dropdown-item" href="{{ route('books.index') }}">Listar Livros</a>
+                                @if(auth()->check() && auth()->user()->role != 'cliente')
                                 <a class="dropdown-item" href="{{ route('books.create') }}">Adicionar Livro</a>
+                                @endif
                             </div>
                         </li>
 
@@ -48,7 +50,9 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="authorsDropdown">
                                 <a class="dropdown-item" href="{{ route('authors.index') }}">Listar Autores</a>
+                                @if(auth()->check() && auth()->user()->role != 'cliente')
                                 <a class="dropdown-item" href="{{ route('authors.create') }}">Adicionar Autor</a>
+                                @endif
                             </div>
                         </li>
 
@@ -59,7 +63,9 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
                                 <a class="dropdown-item" href="{{ route('categories.index') }}">Listar Categorias</a>
+                                @if(auth()->check() && auth()->user()->role != 'cliente')
                                 <a class="dropdown-item" href="{{ route('categories.create') }}">Adicionar Categoria</a>
+                                @endif
                             </div>
                         </li>
 
@@ -70,7 +76,9 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="publishersDropdown">
                                 <a class="dropdown-item" href="{{ route('publishers.index') }}">Listar Editoras</a>
+                                @if(auth()->check() && auth()->user()->role != 'cliente')
                                 <a class="dropdown-item" href="{{ route('publishers.create') }}">Adicionar Editora</a>
+                                @endif
                             </div>
                         </li>
                     </ul>
