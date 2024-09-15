@@ -81,6 +81,17 @@
                                 @endif
                             </div>
                         </li>
+                        @if(auth()->check() && auth()->user()->role === 'administrador')
+                        <li class="nav-item dropdown">
+                            <a id="manageDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Bibliotecários
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="manageDropdown">
+                                <a class="dropdown-item" href="{{ route('manage.index') }}">Listar Bibliotecários</a>
+                                <a class="dropdown-item" href="{{ route('manage.renderUpdateUserRole') }}">Adicionar Bibliotecários</a>
+                            </div>
+                        </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

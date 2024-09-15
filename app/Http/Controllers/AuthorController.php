@@ -21,13 +21,13 @@ class AuthorController extends Controller
     }
     public function create()
     {
-        Gate::authorize('librarian', User::class);
+        Gate::authorize('bibliotecario', User::class);
         return view('authors.create');
     }
 
     public function store(Request $request)
     {
-        Gate::authorize('librarian', User::class);
+        Gate::authorize('bibliotecario', User::class);
         $validateData = $request->validate([
             'name' => 'required|string|max:255',
             'birth_date' => 'nullable|date',
@@ -39,14 +39,14 @@ class AuthorController extends Controller
 
     public function edit($id)
     {
-        Gate::authorize('librarian', User::class);
+        Gate::authorize('bibliotecario', User::class);
         $author = Author::findOrFail($id);
         return view('authors.edit', compact('author'));
     }
 
     public function update(Request $request, $id)
     {
-        Gate::authorize('librarian', User::class);
+        Gate::authorize('bibliotecario', User::class);
         $validatedData = $request->validate([
                     'name' => 'required|string|max:255',
                     'birth_date' => 'nullable|date',
@@ -61,7 +61,7 @@ class AuthorController extends Controller
 
     public function destroy($id)
     {
-        Gate::authorize('librarian', User::class);
+        Gate::authorize('bibliotecario', User::class);
         $author = Author::findOrFail($id);
                 $author->delete();
 

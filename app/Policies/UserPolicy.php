@@ -13,12 +13,12 @@ class UserPolicy
         return $user->role === "administrador";
     }
 
-    public function client(User $user): bool
+    public function cliente(User $user): bool
     {
         return $user->role === "cliente" || $user->role === "bibliotecario" || $user->role === "administrador" || $user->role === null;
     }
 
-    public function librarian(User $user): bool
+    public function bibliotecario(User $user): bool
     {
         return $user->role === "bibliotecario" || $user->role === "administrador";
     }

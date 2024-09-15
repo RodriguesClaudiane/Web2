@@ -20,7 +20,7 @@ use App\Http\Controllers\UsersController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
@@ -43,5 +43,7 @@ Route::resource('categories', CategoryController::class);
 // Rotas para Publishers
 Route::resource('publishers', PublishersController::class);
 //Rotas para Users
-Route::resource('manage', UsersController::class)->only(['index','destroy']);
+Route::get('/manage/edit', [UsersController::class, 'renderUpdateUserRole'])->name('manage.renderUpdateUserRole');
 Route::put('/manage/edit', [UsersController::class, 'updateUserRole'])->name('manage.updateUserRole');
+Route::get('/manage/index',[UsersController::class, 'index'])->name('manage.index');
+Route::patch('/manage.index/{id}',[UsersController::class, 'demoteUser'])->name('manage.demoteUser');
