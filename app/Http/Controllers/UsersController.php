@@ -13,13 +13,15 @@ class UsersController extends Controller
         $librarians = User::where('role','bibliotecario')->get();
         return view('manage.index', compact('librarians'));
     }
+
+    //Renderização da view edit
     public function renderUpdateUserRole()
     {
         Gate::authorize('administrador', User::class);
         return view('manage.edit');
     }
 
-
+    //Altera o cargo do usuário de cliente para bibliotecário
     public function updateUserRole(Request $request)
     {
         Gate::authorize('administrador', User::class);
@@ -36,6 +38,8 @@ class UsersController extends Controller
             return redirect()->back('manage.renderUpdateUserRole')->with('error', 'Usuário não encontrado. Verifique se o email digitado está correto.');
         }
     }
+
+    //remove o usuário do cargo de bibliotecário
     public function demoteUser($id)
     {
         Gate::authorize('administrador', User::class);
